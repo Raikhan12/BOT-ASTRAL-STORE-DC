@@ -1,0 +1,19 @@
+const { ContextMenuCommandBuilder, ApplicationCommandType, MessageEmbed } = require("discord.js");
+
+module.exports = {
+  data: new ContextMenuCommandBuilder()
+    .setName("getAvatar")
+    .setType(ApplicationCommandType.USER),
+  async execute(interaction) {
+    try {
+      const embed = new MessageEmbed()
+        .setColor("BLUE")
+        .setDescription(`${interaction.targetUser}'s Avatar`)
+        .setImage(interaction.targetUser.displayAvatarURL({ dynamic: true, size: 512 }));
+      await interaction.reply({ embeds: [embed] });
+    } catch (error) {
+      console.error("Error fetching and displaying avatar:", error);
+      await interaction.reply("Error fetching and displaying avatar.");
+    }
+  }
+};
